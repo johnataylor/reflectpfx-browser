@@ -1,7 +1,7 @@
 
 import { lexer, parser } from 'reflectpfx';
 
-function processExpression() {
+$(function() {
   $('#eval').on('click', function() {
     var text = $('#expression').val();
     var parseTree = parser.eval(lexer.tokenize(text));
@@ -24,6 +24,4 @@ function processExpression() {
       $('#result').html('');
     }
   });
-}
-  
-processExpression();
+});
