@@ -2,24 +2,22 @@
 import { lexer, parser, structuredCondition } from 'reflectpfx';
 
 function makeHTML (tree) {
-  if (tree.expression) {
-      return `<B>${$('<div/>').text(tree.expression).html()}</B>`;
-  }
-  else {
-      var s = '';
-      s += '<UL>';
-      if (tree.left) {
-          s += '<LI>';
-          s += `<I>${tree.operator}</I>`;
-          s += makeHTML(tree.left);
-          s += '</LI>';
+  var s = `<B>${tree.operator}</B>`;
+  if (tree.children) {
+    s += '<UL>';
+    tree.children.forEach(child => {
+      s += '<LI>'
+      if (child.operator) {
+        s += makeHTML(child);
       }
-      s += '<LI>';
-      s += makeHTML(tree.right);
+      else {
+        s += $('<div/>').text(child.operand).html();
+      }
       s += '</LI>';
-      s += '</UL>';
-      return s;
+    });
+    s += '</UL>';
   }
+  return s;
 }
 
 $(function() {
